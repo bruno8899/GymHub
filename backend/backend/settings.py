@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     
     'posts',
     'accounts',
+    'contact',
 ]
 # JWT settings
 REST_FRAMEWORK = {
@@ -77,6 +78,7 @@ CORS_ALLOW_METHODS = [
     'OPTIONS',
 ]
 
+CSRF_TRUSTED_ORIGINS = ["http://localhost:5173"]
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.gmail.com"

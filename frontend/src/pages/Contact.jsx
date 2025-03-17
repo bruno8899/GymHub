@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import Navbar from "../components/Nav_bar"; // Adjust the path if needed
+
 const ConnectWithUs = () => {
     return (
         <div className="relative">
@@ -8,8 +9,6 @@ const ConnectWithUs = () => {
                 alt="Person lying on grass and using a phone"
                 className="w-full h-screen object-contain brightness-50"
             />
-
-
 
             <div className="absolute inset-0 flex flex-col items-center justify-center text-white text-center px-4">
                 <h1 className="text-4xl font-bold">Connect With Us</h1>
@@ -27,6 +26,56 @@ const ConnectWithUs = () => {
 };
 
 const GetInTouch = () => {
+    // State for form data
+    const [formData, setFormData] = useState({
+        name: "",
+        email: "",
+        message: "",
+    });
+
+    // Handle form data changes
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({
+            ...formData,
+            [name]: value,
+        });
+    };
+
+    // Handle form submission
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+    
+        try {
+            const response = await fetch("http://127.0.0.1:8000/api/contacts/contact-form/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(formData),
+            });
+    
+            const data = await response.json();
+    
+            if (response.ok) {
+                alert("Message sent successfully!");
+                setFormData({
+                    name: "",
+                    email: "",
+                    message: "",
+                });
+            } else {
+                alert(`Failed to send message: ${data.message}`);
+            }
+        } catch (error) {
+            console.error("Error submitting contact form:", error);
+            alert("An error occurred while submitting the form.");
+        }
+    };
+    
+    
+    
+
     return (
         <div className="bg-black text-white py-16">
             <div className="max-w-6xl mx-auto px-4">
@@ -39,18 +88,27 @@ const GetInTouch = () => {
                 <div className="mt-8 flex flex-col md:flex-row md:space-x-8">
                     {/* Contact Form */}
                     <div className="flex-1">
-                        <form className="space-y-4">
+                        <form onSubmit={handleSubmit} className="space-y-4">
                             <input
                                 type="text"
+                                name="name"
+                                value={formData.name}
+                                onChange={handleInputChange}
                                 placeholder="Name"
                                 className="w-full px-4 py-2 bg-gray-800 text-white border border-gray-600 rounded focus:outline-none"
                             />
                             <input
                                 type="email"
+                                name="email"
+                                value={formData.email}
+                                onChange={handleInputChange}
                                 placeholder="Email"
                                 className="w-full px-4 py-2 bg-gray-800 text-white border border-gray-600 rounded focus:outline-none"
                             />
                             <textarea
+                                name="message"
+                                value={formData.message}
+                                onChange={handleInputChange}
                                 placeholder="Message"
                                 className="w-full px-4 py-2 bg-gray-800 text-white border border-gray-600 rounded h-32 focus:outline-none"
                             ></textarea>

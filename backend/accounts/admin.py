@@ -1,7 +1,11 @@
 from django.contrib import admin
-from .models import User, Token
+from django.contrib.auth.models import User
+from django.contrib.auth.admin import UserAdmin
 
-# Register your models here.
-admin.site.register(User)
-admin.site.register(Token)
+class CustomUserAdmin(UserAdmin):
+    model = User
+    list_display = ('username', 'email',  'is_active', 'is_staff')
+    search_fields = ('username', 'email')
 
+admin.site.unregister(User)  # Unregister the original User model
+admin.site.register(User, CustomUserAdmin)  # Register the custom UserAdmin
