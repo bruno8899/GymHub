@@ -3,10 +3,11 @@ import Navbar from "../components/Nav_bar";
 
 const HireTrainer = () => {
   return (
-    <div className="bg-gray-900 text-white">
-      <Navbar />
+    <>
+    <div className="bg-gray-900 py-1 text-white">
+     
       <header
-        className="text-center py-12 bg-cover bg-center"
+        className="text-center py-1 bg-cover bg-center"
         style={{
           backgroundImage:
             "url('https://storage.googleapis.com/a1aa/image/reeWnMx4_KxkqGVPACYk90_smQNPUkBp-goVoVZQ4ns.jpg')",
@@ -219,6 +220,7 @@ const HireTrainer = () => {
         </div>
       </main>
     </div>
+    </>
   );
 };
 

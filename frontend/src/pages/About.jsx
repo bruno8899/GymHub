@@ -3,7 +3,7 @@ import Navbar from '../components/Nav_bar';
 const AboutUs = () => {
   return (
     <div className="bg-gray-100 font-roboto">
-      <Navbar />
+      {/* <Navbar /> */}
 
       {/* Hero Section */}
       <div className="relative">

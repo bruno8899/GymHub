@@ -1,5 +1,6 @@
 import React from "react";
 const Classes = () => {
+  
   const classData = [
     {
       title: "Weight Loss ",
