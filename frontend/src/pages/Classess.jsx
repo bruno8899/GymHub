@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+
 const Classes = () => {
-  
   const classData = [
     {
       title: "Weight Loss ",
@@ -28,28 +29,79 @@ const Classes = () => {
     },
   ];
 
-  const stats = [
-    { number: 874, label: "Our Happy Clients" },
-    { number: 789, label: "Our Best Trainers" },
-    { number: 985, label: "Cup Of Coffee" },
-    { number: 698, label: "Our Latest Equipment" },
-  ];
+  const [schedule, setSchedule] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const schedule = [
-    { className: "Fitness", time: "9:00am - 10:00am", trainer: "Chris Bumstead" },
-    { className: "Fitness", time: "6:00am - 8:00am", trainer: "Kai Greene" },
-    { className: "Fitness", time: "5:00pm - 7:00pm", trainer: "Sam sulek" },
-  ];
+  // Handle the expanded/collapsed description
+  const [expanded, setExpanded] = useState(null); // Store expanded state for each description
+
+  const toggleDescription = (index) => {
+    setExpanded(expanded === index ? null : index); // Toggle between expanded and collapsed state
+  };
+
+  // Fetch class schedule data from backend
+  useEffect(() => {
+    axios
+      .get("http://127.0.0.1:8000/api/classes/schedule/") // Update this with your actual API endpoint
+      .then((response) => {
+        setSchedule(response.data); // Update state with fetched data
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching class schedule:", error);
+        setError("Failed to load class schedule.");
+        setLoading(false);
+      });
+  }, []);
 
   return (
     <div className="bg-gray-900 text-white">
-      <header className="bg-gradient-to-b from-black to-gray-800 py-12 text-center">
-        <h1 className="text-4xl font-bold">Classes</h1>
-        <nav className="mt-4">
-          <a className="text-red-500" href="#">Home</a> / <span>Classes</span>
-        </nav>
+      <header className="bg-gradient-to-b from-black to-gray-800 pt-15 py-20 text-center">
+        {/* Header Content */}
       </header>
 
+      {/* Show loading state */}
+      {loading && <p className="text-center mt-8">Loading class schedule...</p>}
+
+      {/* Show error message if fetch fails */}
+      {error && <p className="text-center text-red-500">{error}</p>}
+
+      {/* Schedule Section */}
+      <section className="bg-gray-900 text-white py-16">
+        <div className="container mx-auto px-4">
+          <h2 className="text-center text-red-500 font-bold">OUR SCHEDULE</h2>
+          <h3 className="text-center text-3xl font-bold mt-4">Weekly Class Schedule</h3>
+
+          <div className="mt-8 space-y-4">
+            {schedule.length > 0 ? (
+              schedule.map((item, index) => (
+                <div key={index} className="bg-gray-800 p-6 rounded-lg flex justify-between items-center">
+                  <div>
+                    <h4 className="text-xl font-bold">Class Name</h4>
+                    <p className="text-gray-400">{item.class_name}</p>
+                  </div>
+                  <div>
+                    <h4 className="text-xl font-bold">Class Time</h4>
+                    <p className="text-gray-400">{item.time}</p>
+                  </div>
+                  <div>
+                    <h4 className="text-xl font-bold">Trainer Name</h4>
+                    <p className="text-gray-400">{item.trainer}</p>
+                  </div>
+                  <a className="bg-red-500 text-white py-2 px-4 rounded-full" href="#">
+                    Discover More
+                  </a>
+                </div>
+              ))
+            ) : (
+              <p className="text-center mt-4">No class schedules available.</p>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* Class Cards Section */}
       <section className="bg-white text-gray-900 py-16">
         <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8">
           {classData.map((item, index) => (
@@ -66,65 +118,20 @@ const Classes = () => {
               <div className="p-6">
                 <h2 className="text-red-500 font-bold">{item.category}</h2>
                 <h3 className="text-xl font-bold mt-2">{item.title}</h3>
-                <p className="text-gray-600 mt-2">{item.description}</p>
-                <a className="text-red-500 mt-4 inline-block" href="#">Read more</a>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="bg-red-600 text-white py-12">
-        <div className="container mx-auto px-4 text-center grid grid-cols-2 md:grid-cols-4 gap-8">
-          {stats.map((stat, index) => (
-            <div key={index}>
-              <h3 className="text-4xl font-bold">{stat.number}</h3>
-              <p className="mt-2">{stat.label}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="bg-gray-900 text-white py-16">
-        <div className="container mx-auto px-4">
-          <h2 className="text-center text-red-500 font-bold">OUR SCHEDULE</h2>
-          <h3 className="text-center text-3xl font-bold mt-4">Weekly Class Schedule</h3>
-          <div className="flex justify-center mt-8 space-x-2">
-            {["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"].map(
-              (day, index) => (
-                <button
-                  key={index}
-                  className={`py-2 px-4 rounded-full ${index === 0 ? "bg-red-500" : "bg-gray-700"}`}
+                <p className="text-gray-600 mt-2">
+                  {expanded === index
+                    ? item.description
+                    : item.description.slice(0, 100) + "..."}
+                </p>
+                <a
+                  className="text-red-500 mt-4 inline-block cursor-pointer"
+                  onClick={() => toggleDescription(index)}
                 >
-                  {day}
-                </button>
-              )
-            )}
-          </div>
-          <div className="mt-8 space-y-4">
-            {schedule.map((item, index) => (
-              <div
-                key={index}
-                className="bg-gray-800 p-6 rounded-lg flex justify-between items-center"
-              >
-                <div>
-                  <h4 className="text-xl font-bold">Class Name</h4>
-                  <p className="text-gray-400">{item.className}</p>
-                </div>
-                <div>
-                  <h4 className="text-xl font-bold">Class Time</h4>
-                  <p className="text-gray-400">{item.time}</p>
-                </div>
-                <div>
-                  <h4 className="text-xl font-bold">Trainer Name</h4>
-                  <p className="text-gray-400">{item.trainer}</p>
-                </div>
-                <a className="bg-red-500 text-white py-2 px-4 rounded-full" href="#">
-                  Discover More
+                  {expanded === index ? "Read Less" : "Read More"}
                 </a>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       </section>
     </div>

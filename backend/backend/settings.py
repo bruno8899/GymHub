@@ -46,6 +46,9 @@ INSTALLED_APPS = [
     'posts',
     'accounts',
     'contact',
+    'classes',
+    'trainers',
+    
 ]
 # JWT settings
 REST_FRAMEWORK = {
@@ -98,6 +101,10 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',  # Default authentication

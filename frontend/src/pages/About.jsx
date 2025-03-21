@@ -9,10 +9,8 @@ const AboutUs = () => {
       <div className="relative">
         <img
           alt="Gym interior with equipment and a person working out"
-          className="w-full h-auto"
-          height="400"
+          className="w-full h-auto max-h-[600px] object-cover"
           src="https://storage.googleapis.com/a1aa/image/kGP-We9EB_QX6I_S0HWVj_NFGSoat6rKq-oW7wCz4A4.jpg"
-          width="1920"
         />
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="bg-white bg-opacity-75 p-8 m-8 rounded-lg shadow-lg max-w-lg">
@@ -25,6 +23,7 @@ const AboutUs = () => {
           </div>
         </div>
       </div>
+
 
       {/* Mission Section */}
       <div className="py-16 text-center bg-black">
@@ -106,7 +105,7 @@ const AboutUs = () => {
         </div>
       </div>
 
-    
+
     </div>
   );
 };

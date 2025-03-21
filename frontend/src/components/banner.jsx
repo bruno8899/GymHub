@@ -10,8 +10,9 @@ const Card = () => {
         <p className="text-white mb-4">
           Discover a world of fitness tailored just for you, where our state-of-the-art facilities and expert trainers help you achieve your health goals.
         </p>
+        
         <button className="h-[36px] w-[120px] text-white bg-red-600 font-semibold rounded">
-          Book Now
+          Hire Now
         </button>
       </div>
     </div>
