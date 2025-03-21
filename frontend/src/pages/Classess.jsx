@@ -7,7 +7,7 @@ const Classes = () => {
       title: "Weight Loss ",
       category: "Gym Fit",
       description:
-        "Seamlessly visualize quality electrical capital without superior collaboration and idea tically and user sharing listically",
+        "At GymHub, we are committed to helping you achieve your weight loss goals through expert guidance, state-of-the-art facilities, and personalized workout plans. Whether you're just starting your fitness journey or looking to take your training to the next level, we have everything you need to succeed.",
       image:
         "https://storage.googleapis.com/a1aa/image/w3VMn192fJeuvMF-wWM7gtB526F6Zd_yyVrq0WFqLso.jpg",
     },
@@ -15,7 +15,7 @@ const Classes = () => {
       title: "Physical Activities",
       category: "Gym Fit",
       description:
-        "Seamlessly visualize quality electrical capital without superior collaboration and idea tically and user sharing listically",
+        "At GymHub, we believe that staying active is the key to a healthier, happier life. Our diverse range of physical activities is designed to help you improve strength, endurance, flexibility, and overall well-being. Whether you're a beginner or a fitness enthusiast, we have something for everyone!",
       image:
         "https://storage.googleapis.com/a1aa/image/i_XplkxRyRK_oSNOyhCXk830zLqv_w2FEVyXebKb3ew.jpg",
     },
@@ -23,7 +23,7 @@ const Classes = () => {
       title: "Zumba & Yoga",
       category: "Gym Fit",
       description:
-        "Seamlessly visualize quality electrical capital without superior collaboration and idea tically and user sharing listically",
+        "At GymHub, we bring you the perfect balance of energy and relaxation with our Zumba & Yoga programs. Whether you want to dance your way to fitness or find inner peace and flexibility, we have the perfect class for you!",
       image:
         "https://storage.googleapis.com/a1aa/image/0y9By3IP0nag4F2j4JQ3selio0-i6v8kFLzdDAwWyYU.jpg",
     },

@@ -1,10 +1,22 @@
-import React from 'react';
-import Navbar from '../components/Nav_bar';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+
 const AboutUs = () => {
+  const [experts, setExperts] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://127.0.0.1:8000/api/expert/experts/") // Replace with your actual backend URL
+      .then((response) => {
+        setExperts(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching experts:", error);
+      });
+  }, []);
+
   return (
     <div className="bg-gray-100 font-roboto">
-      {/* <Navbar /> */}
-
       {/* Hero Section */}
       <div className="relative">
         <img
@@ -14,16 +26,47 @@ const AboutUs = () => {
         />
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="bg-white bg-opacity-75 p-8 m-8 rounded-lg shadow-lg max-w-lg">
-            <h2 className="text-2xl font-bold mb-4">
-              About Us
-            </h2>
+            <h2 className="text-2xl font-bold mb-4">About Us</h2>
             <p className="text-gray-1000 mb-4">
-              Welcome to Gym Website! We are more than just a gym; we are a community of fitness enthusiasts committed to helping you reach your fitness goals. From state-of-the-art equipment to expert trainers, we provide everything you need to succeed.
+              Welcome to Gym Website! We are more than just a gym; we are a
+              community of fitness enthusiasts committed to helping you reach
+              your fitness goals. From state-of-the-art equipment to expert
+              trainers, we provide everything you need to succeed.
             </p>
           </div>
         </div>
       </div>
 
+      {/* Expert Team Section */}
+      <div className="text-center py-16">
+        <h2 className="text-3xl font-bold mb-4">Our Expert Team</h2>
+        <p className="text-gray-700 mb-8">
+          Meet the dedicated professionals committed to your fitness journey.
+        </p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 px-8">
+          {experts.length > 0 ? (
+            experts.map((expert) => (
+              <div
+                key={expert.id}
+                className="bg-white rounded-lg shadow-lg overflow-hidden p-4"
+              >
+                <img
+                  src={`http://127.0.0.1:8000${expert.image}`}
+                  alt={expert.name}
+                  className="w-full h-85 object-cover "
+                />
+                <div className="p-4">
+                  <h3 className="text-xl font-semibold">{expert.name}</h3>
+                  <p className="text-gray-700">{expert.role}</p>
+                  <p className="text-gray-500 text-sm mt-2">{expert.bio}</p>
+                </div>
+              </div>
+            ))
+          ) : (
+            <p className="text-gray-500">Loading experts...</p>
+          )}
+        </div>
+      </div>
 
       {/* Mission Section */}
       <div className="py-16 text-center bg-black">
@@ -34,15 +77,15 @@ const AboutUs = () => {
       </div>
 
       {/* Vision Section */}
-      <div className="py-16 text-center bg-gray-50">
-        <h2 className="text-3xl font-bold mb-4">Our Vision</h2>
-        <p className="text-gray-700 mb-8 max-w-3xl mx-auto">
+      <div className="py-16 text-center bg-black">
+        <h2 className="text-3xl text-white font-bold mb-4">Our Vision</h2>
+        <p className="text-white mb-8 max-w-3xl mx-auto">
           We envision a world where fitness is accessible to everyone, and people of all backgrounds can achieve their health goals in a supportive, inclusive community.
         </p>
       </div>
 
       {/* Values Section */}
-      <div className="py-16 text-white text-center bg-black">
+      <div className="py-10  text-black text-center bg-white">
         <h2 className="text-3xl font-bold mb-4">Our Values</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 px-8">
           <div className="bg-gray-100 p-6 rounded-lg shadow-lg">
@@ -65,47 +108,6 @@ const AboutUs = () => {
           </div>
         </div>
       </div>
-
-      {/* Expert Team Section */}
-      <div className="text-center py-16">
-        <h2 className="text-3xl font-bold mb-4">
-          Our Expert Team
-        </h2>
-        <p className="text-gray-700 mb-8">
-          Meet the dedicated professionals committed to your fitness journey.
-        </p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 px-8">
-          <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-            <img
-              alt="Portrait of a fitness expert"
-              className="w-full h-auto"
-              height="400"
-              src="https://i.pinimg.com/736x/b6/8b/9d/b68b9d8e8e0a936d6c4350bb0ae84f3d.jpg"
-              width="350"
-            />
-          </div>
-          <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-            <img
-              alt="Portrait of a fitness expert"
-              className="w-full h-auto"
-              height="400"
-              src="https://i.pinimg.com/736x/2a/44/a2/2a44a27fb2c92b35c25449149cf62906.jpg"
-              width="350"
-            />
-          </div>
-          <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-            <img
-              alt="Portrait of a fitness expert"
-              className="w-full h-auto"
-              height="350"
-              src="https://i.pinimg.com/736x/17/6f/42/176f42fdc55a3d5d0238fa4bf1089e50.jpg"
-              width="400"
-            />
-          </div>
-        </div>
-      </div>
-
-
     </div>
   );
 };

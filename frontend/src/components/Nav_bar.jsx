@@ -22,12 +22,9 @@ const Nav_bar = () => {
       </div>
       <div>
         <ul className="flex gap-12 pr-32">
+          {/* Always visible links */}
           <Link to="/">
             <li className="text-white font-semibold">Home</li>
-          </Link>
-
-          <Link to="Classess">
-            <li className="text-white font-semibold">Classess</li>
           </Link>
 
           <Link to="Contact">
@@ -38,9 +35,18 @@ const Nav_bar = () => {
             <li className="text-white font-semibold">About</li>
           </Link>
 
-          <Link to="HireTrainers">
-            <li className="text-white font-semibold">HireTrainers</li>
-          </Link>
+          {/* Show additional links only if the user is logged in */}
+          {isLoggedIn && (
+            <>
+              <Link to="Classess">
+                <li className="text-white font-semibold">Classess</li>
+              </Link>
+
+              <Link to="HireTrainers">
+                <li className="text-white font-semibold">HireTrainers</li>
+              </Link>
+            </>
+          )}
 
           {/* If the user is logged in, show the Logout button; otherwise, show Join Now */}
           {isLoggedIn ? (

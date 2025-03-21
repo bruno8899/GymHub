@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'contact',
     'classes',
     'trainers',
+    'expert',
     
 ]
 # JWT settings
@@ -101,6 +102,14 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"  # Use your email provider's SMTP
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = "kritikac206@gmail.com"  # Replace with your email
+EMAIL_HOST_PASSWORD = "eyry udnc mjzt koui"  # Use an App Password (not your main password)
+
 
 
 MEDIA_URL = '/media/'

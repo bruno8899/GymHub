@@ -25,7 +25,7 @@ urlpatterns = [
     path('api/contacts/', include('contact.urls')),  # Include contact app's URLs
     path('api/classes/', include('classes.urls')),
     path('api/trainer/', include('trainers.urls')), 
-    
+    path('api/expert/', include('expert.urls')),
 
 ]
 

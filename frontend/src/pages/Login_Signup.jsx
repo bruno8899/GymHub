@@ -12,6 +12,7 @@ const LoginSignup = () => {
     confirmPassword: "",
   });
   const [error, setError] = useState("");
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
   const navigate = useNavigate(); // Hook for navigation
 
   const handleChange = (e) => {
@@ -62,10 +63,23 @@ const LoginSignup = () => {
       );
     }
   };
-  
 
+  const handleForgotPassword = async (e) => {
+    e.preventDefault();
   
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/api/accounts/forgot-password/",
+        { email: formData.email }
+      );
   
+      console.log("Forgot password response:", response.data);
+      alert("Password reset link has been sent to your email.");
+    } catch (error) {
+      console.error("Error:", error.response ? error.response.data : error);
+      setError("Error sending password reset email. Please try again.");
+    }
+  };
   
 
   return (
@@ -140,15 +154,43 @@ const LoginSignup = () => {
 
         {error && <p className="text-red-500 text-center mt-2">{error}</p>}
 
-        <p className="text-center text-gray-200 mt-4">
-          {isSignup ? "Already have an account?" : "Don't have an account?"}{" "}
-          <button
-            onClick={() => setIsSignup(!isSignup)}
-            className="text-red-500 hover:underline focus:outline-none"
-          >
-            {isSignup ? "Login" : "Sign up"}
-          </button>
-        </p>
+        {showForgotPassword ? (
+          <form onSubmit={handleForgotPassword} className="flex flex-col gap-4 mt-4">
+            <input
+              type="email"
+              name="email"
+              placeholder="Enter your email to reset password"
+              value={formData.email}
+              onChange={handleChange}
+              className="border border-gray-300 p-2 rounded bg-black/20 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
+              required
+            />
+            <button
+              type="submit"
+              className="bg-blue-600 text-white p-2 rounded hover:bg-blue-700 transition"
+            >
+              Send Reset Link
+            </button>
+          </form>
+        ) : (
+          <p className="text-center text-gray-200 mt-4">
+            {isSignup ? "Already have an account?" : "Don't have an account?"}{" "}
+            <button
+              onClick={() => setIsSignup(!isSignup)}
+              className="text-red-500 hover:underline focus:outline-none"
+            >
+              {isSignup ? "Login" : "Sign up"}
+            </button>
+            {!isSignup && (
+              <button
+                onClick={() => setShowForgotPassword(true)}
+                className="text-red-500 hover:underline focus:outline-none ml-4"
+              >
+                Forgot Password?
+              </button>
+            )}
+          </p>
+        )}
       </div>
     </div>
   );
